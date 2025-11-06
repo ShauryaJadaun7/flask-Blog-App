@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="mb-4 text-primary"><i class="fas fa-user"></i> Welcome, {{ session.get('email').split('@')[0] }}!</h2>
+            <div class="card bg-light p-4 mb-4">
+                <h4 class="card-title">Your Blogs</h4>
+                {% if blogs %}
+                    {% for blog in blogs %}
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ blog.title }}</h5>
+                                <p class="card-text">{{ blog.content[:150] }}...</p>
+                                <p class="text-muted">Posted on {{ blog.date_posted.strftime('%Y-%m-%d') }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center">No blogs posted yet. Start writing!</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-white shadow-lg p-4" style="border-radius: 15px;">
+                <h4 class="card-title text-primary"><i class="fas fa-pen"></i> Post a New Blog</h4>
+                <form method="POST" action="{{ url_for('post_blog') }}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" name="title" id="title" class="form-control form-control-lg" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Content</label>
+                        <textarea name="content" id="content" class="form-control" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2">Post</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

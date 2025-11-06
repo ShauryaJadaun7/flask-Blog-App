@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}{{ blog.title }}{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <!-- Blog Post -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title text-primary">{{ blog.title }}</h2>
+            <p class="card-text">{{ blog.content }}</p>
+            <p class="text-muted">
+                By <strong>{{ blog.user.name }}</strong> | 
+                {{ blog.date_posted.strftime('%d-%m-%Y %H:%M') }}
+            </p>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h4 class="card-title">Comments ({{ comments|length }})</h4>
+            
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="border-bottom pb-2 mb-2">
+                        <p class="mb-1">{{ comment.content }}</p>
+                        <small class="text-muted">
+                            — {{ comment.user.name }} on {{ comment.date_posted.strftime('%d-%m-%Y %H:%M') }}
+                        </small>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted">No comments yet. Be the first to share your thoughts!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Add Comment Form -->
+    {% if session.get('email') %}
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Add a Comment</h5>
+                <form method="POST" action="{{ url_for('add_comment', blog_id=blog.id) }}">
+                    <div class="mb-3">
+                        <textarea class="form-control" name="content" rows="3" placeholder="Write your comment here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-muted">You must <a href="{{ url_for('login') }}">log in</a> to comment.</p>
+    {% endif %}
+
+
+    <div class="mt-3">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-sm">← Back to Home</a>
+    </div>
+</div>
+{% endblock %}
