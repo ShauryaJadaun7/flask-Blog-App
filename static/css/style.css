@@ -1,0 +1,50 @@
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+.bg-gradient {
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.form-control:focus {
+    border-color: #6b48ff;
+    box-shadow: 0 0 5px rgba(107, 72, 255, 0.5);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #6b48ff, #ff4b5a);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #5a3de5, #e63946);
+}
+
+.alert {
+    border-radius: 10px;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
